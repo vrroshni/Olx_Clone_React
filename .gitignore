@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+React_tutorial_olx_clone/node_modules
+React_tutorial_olx_clone/.pnp
+React_tutorial_olx_clone/.pnp.js
+
+# testing
+React_tutorial_olx_clone/coverage
+
+# production
+React_tutorial_olx_clone/build
+
+# misc
+React_tutorial_olx_clone/.DS_Store
+React_tutorial_olx_clone/.env.local
+React_tutorial_olx_clone/.env.development.local
+React_tutorial_olx_clone/.env.test.local
+React_tutorial_olx_clone/.env.production.local
+
+React_tutorial_olx_clone/npm-debug.log*
+React_tutorial_olx_clone/yarn-debug.log*
+React_tutorial_olx_clone/yarn-error.log*
