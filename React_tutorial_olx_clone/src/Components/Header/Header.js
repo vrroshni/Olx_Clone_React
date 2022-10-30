@@ -42,9 +42,13 @@ function Header() {
           {user ? (
             <span>{`Welcome ${user.displayName}`}</span>
           ) : (
-            <span  onClick={() => {
-              history.push("/login");
-            }}>LogIn</span>
+            <span
+              onClick={() => {
+                history.push("/login");
+              }}
+            >
+              LogIn
+            </span>
           )}
           <hr />
         </div>
@@ -63,7 +67,23 @@ function Header() {
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            {user ? (
+              <span
+                onClick={() => {
+                  history.push("/sell");
+                }}
+              >
+                SELL
+              </span>
+            ) : (
+              <span
+                onClick={() => {
+                  history.push("/login");
+                }}
+              >
+                SELL
+              </span>
+            )}
           </div>
         </div>
       </div>
