@@ -1,6 +1,8 @@
-import React from 'react';
+import React,{useEffect,useContext} from 'react';
 import './App.css';
+import {AuthContext,FireBaseContext} from './store/Context'
 import Signup from './Pages/Signup'
+import Login from './Pages/Login'
 import {BrowserRouter as Router,Route} from 'react-router-dom'
 /**
  * ?  =====Import Components=====
@@ -8,6 +10,14 @@ import {BrowserRouter as Router,Route} from 'react-router-dom'
 import Home from './Pages/Home';
 
 function App() {
+  const {user,setUser}=useContext(AuthContext)
+  const {firebase}=useContext(FireBaseContext)
+  useEffect(()=>{
+    firebase.auth().onAuthStateChanged((user)=>{
+      setUser(user)
+    })
+
+  })
   return (
     <div>
       <Router>
@@ -16,6 +26,9 @@ function App() {
         </Route>
         <Route  path='/signup'>
       <Signup/>
+        </Route>
+        <Route  path='/login'>
+      <Login/>
         </Route>
       </Router>
     </div>

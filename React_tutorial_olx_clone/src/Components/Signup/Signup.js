@@ -1,19 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from "react";
+import { FireBaseContext } from "../../store/Context";
+import { useHistory } from "react-router-dom";
 
-import Logo from '../../olx-logo.png';
-import './Signup.css';
+import Logo from "../../olx-logo.png";
+import "./Signup.css";
 
 export default function Signup() {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [mobile, setMobile] = useState('')
-  const [password, setPassword] = useState('')
-  const handleSubmit=(e)=>{
-    e.preventDefault()
-    if ((username==='')||(email==='')||(mobile==='')||(password==='')){
-      alert('Fields Cannot be Empty')
+  const history = useHistory();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [password, setPassword] = useState("");
+  const { firebase } = useContext(FireBaseContext);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (username === "" || email === "" || mobile === "" || password === "") {
+      alert("Fields Cannot be Empty");
     }
-  }
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        result.user.updateProfile({ displayName: username }).then(() => {
+          firebase
+            .firestore()
+            .collection("users")
+            .add({
+              id: result.user.uid,
+              username: username,
+              phone: mobile,
+            })
+            .then(() => {
+              history.push("/login");
+            });
+        });
+      });
+  };
   return (
     <div>
       <div className="signupParentDiv">
@@ -28,9 +50,8 @@ export default function Signup() {
             name="name"
             defaultValue="John"
             value={username}
-            onChange={(e)=>{
-              setUsername(e.target.value)
-
+            onChange={(e) => {
+              setUsername(e.target.value);
             }}
           />
           <br />
@@ -43,9 +64,8 @@ export default function Signup() {
             name="email"
             defaultValue="John"
             value={email}
-            onChange={(e)=>{
-              setEmail(e.target.value)
-
+            onChange={(e) => {
+              setEmail(e.target.value);
             }}
           />
           <br />
@@ -58,9 +78,8 @@ export default function Signup() {
             name="phone"
             defaultValue="Doe"
             value={mobile}
-            onChange={(e)=>{
-              setMobile(e.target.value)
-
+            onChange={(e) => {
+              setMobile(e.target.value);
             }}
           />
           <br />
@@ -73,9 +92,8 @@ export default function Signup() {
             name="password"
             defaultValue="Doe"
             value={password}
-            onChange={(e)=>{
-              setPassword(e.target.value)
-
+            onChange={(e) => {
+              setPassword(e.target.value);
             }}
           />
           <br />
