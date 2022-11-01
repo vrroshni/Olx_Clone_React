@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import {useHistory} from 'react-router-dom'
-import { FireBaseContext } from "../../store/Context";
+import { AuthContext, FireBaseContext } from "../../store/Context";
 import {PostContext} from "../../store/PostContext";
 
 import Heart from "../../assets/Heart";
@@ -9,7 +9,8 @@ import "./Post.css";
 function Posts() {
   const { firebase } = useContext(FireBaseContext);
   const [products, setProducts] = useState([]);
-  const {setPostDetails}=useContext(PostContext)
+  const {setPostDetails,postDetails}=useContext(PostContext)
+  const {user}=useContext(AuthContext)
   const history=useHistory()
   useEffect(() => {
     firebase
@@ -67,22 +68,30 @@ function Posts() {
           <span>Fresh recommendations</span>
         </div>
         <div className="cards">
-          <div className="card">
+        {user && products.map((product) => {
+          return (
+          <div className="card" onClick={()=>{
+                setPostDetails(product)
+                history.push('/view')
+
+              }}>
             <div className="favorite">
               <Heart></Heart>
             </div>
             <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
+              <img src={product.url} alt="" />
             </div>
             <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
+              <p className="rate">&#x20B9; {product.price}</p>
+              <span className="kilometer">{product.category}</span>
+              <p className="name"> {product.productName}</p>
             </div>
             <div className="date">
-              <span>10/5/2021</span>
+              <span>{product.createdAt}</span>
             </div>
           </div>
+          )
+        })}
         </div>
       </div>
     </div>

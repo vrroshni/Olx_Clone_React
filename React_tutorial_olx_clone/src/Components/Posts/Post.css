@@ -24,6 +24,9 @@
 .recommendations .cards {
   display: flex;
 }
+.cards {
+  display: flex;
+}
 
 .moreView .cards {
   white-space: nowrap;

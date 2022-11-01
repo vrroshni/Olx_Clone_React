@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext, FireBaseContext } from "../../store/Context";
+import Swal from 'sweetalert2'
+
 
 import "./Header.css";
 import OlxLogo from "../../assets/OlxLogo";
@@ -55,8 +57,26 @@ function Header() {
         {user && (
           <span
             onClick={() => {
-              firebase.auth().signOut();
-              history.push("/");
+              Swal.fire({
+                title: 'Are you Sure?',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonText: "OK",
+                cancelButtonText: "Cancel",
+                icon: 'warning'
+            }
+            ).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+      
+                    Swal.fire('You are logged out', '', 'success');
+                    firebase.auth().signOut();
+                    history.push("/");
+      
+                } 
+      
+            })
+              
             }}
           >
             Logout
@@ -65,7 +85,7 @@ function Header() {
 
         <div className="sellMenu">
           <SellButton></SellButton>
-          <div className="sellMenuContent">
+          <div className="sellMenuContent" >
             <SellButtonPlus></SellButtonPlus>
             {user ? (
               <span
