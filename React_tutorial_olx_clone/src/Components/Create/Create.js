@@ -42,6 +42,13 @@ const Create = () => {
           userId:user.uid,
           createdAt:date.toDateString()
         })
+        Swal.fire({
+          
+          icon: 'success',
+          title: 'Your product  has been Added',
+          showConfirmButton: false,
+          timer: 1500
+        })
         history.push('/')
 
       })

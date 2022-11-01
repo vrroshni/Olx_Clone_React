@@ -62,6 +62,8 @@ function Header() {
                 showConfirmButton: true,
                 showCancelButton: true,
                 confirmButtonText: "OK",
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
                 cancelButtonText: "Cancel",
                 icon: 'warning'
             }
